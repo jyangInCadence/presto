@@ -22,6 +22,8 @@ import com.facebook.presto.spi.block.Block;
 import com.facebook.presto.spi.type.BigintType;
 import com.facebook.presto.spi.type.BooleanType;
 import com.facebook.presto.spi.type.DateType;
+import com.facebook.presto.spi.type.DecimalType;
+import com.facebook.presto.spi.type.Decimals;
 import com.facebook.presto.spi.type.DoubleType;
 import com.facebook.presto.spi.type.IntegerType;
 import com.facebook.presto.spi.type.StandardTypes;
@@ -546,6 +548,12 @@ public class Field
             if (!(v instanceof Date)) {
                 throw new PrestoException(INTERNAL_ERROR,
                         "Object is not a Calendar, Date, or Long, but " + v.getClass());
+            }
+        }
+        else if (t instanceof DecimalType) {
+            if (!(v instanceof Double)) {
+                throw new PrestoException(INTERNAL_ERROR,
+                        "Object is not a Double, but " + v.getClass());
             }
         }
         else if (t instanceof DoubleType) {
